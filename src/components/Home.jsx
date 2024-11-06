@@ -4,22 +4,20 @@ import ScrollableHome from "./ScrollableHome";
 
 export default function Home() {
   return (
-    <>
-      <div style={{ height: "100vh" }}>
-        <Header title="Transaction" />
+    <div style={{ height: "100vh" }}>
+      <Header title="Transaction" />
 
-        <div className="flex flex-row">
-          <Sidebar
-            style={{
-              width: "20%",
-            }}
-          />
+      <div className="flex flex-row">
+        <Sidebar
+          style={{
+            width: "20%",
+          }}
+        />
 
-          <ScrollableHome
-            style={{ flexGrow: 1, overflowY: "auto", padding: "2rem" }}
-          />
-        </div>
+        <ScrollableHome
+          style={{ flexGrow: 1, overflowY: "auto", padding: "2rem" }}
+        />
       </div>
-    </>
+    </div>
   );
 }
