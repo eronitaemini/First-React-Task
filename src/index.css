@@ -1,13 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.btn {
+  @apply mr-10 bg-red-300 px-5 rounded-md shadow-lg;
+}
+
+.link {
+  @apply text-sm lg:text-2xl font-bold mb-2;
+}
+
+.title {
+  @apply text-4xl font-extrabold leading-none tracking-tight text-black md:text-5xl lg:text-6xl p-5;
+}
+
+.header {
+  @apply border-b-2 border-black px-5 py-5;
+}
+
+.newPage {
+  @apply flex flex-col items-center;
+}
+
+.subtitle {
+  @apply mb-4 font-extrabold text-black lg:text-4xl px-5;
+}
+.trscCardTitle {
+  @apply text-3xl font-bold;
+}
+.trscCardCategory {
+  @apply text-lg text-gray-500  font-bold;
+}
+
+.trscCardAmountANDdate {
+  @apply font-bold;
+}
+
+.btnContainer {
+  @apply flex flex-row justify-start mt-5;
 }
