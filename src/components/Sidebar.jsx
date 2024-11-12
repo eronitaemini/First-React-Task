@@ -13,10 +13,8 @@ export default function Sidebar({ style }) {
         style={style}
         className={`bg-slate-100 py-10 ${
           menuClicked ? "block" : "hidden"
-        } lg:block`}
+        } lg:block h-screen w-1/6`}
       >
-        <h3 className="subtitle">Sidebar</h3>
-
         <div>
           <ul className="flex flex-col py-5 px-5">
             <Link className="link">Home</Link>

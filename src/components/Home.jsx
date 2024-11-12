@@ -5,15 +5,10 @@ import ScrollableHome from "./ScrollableHome";
 export default function Home() {
   return (
     <div style={{ height: "100vh" }}>
-      <Header title="Transaction" />
+      <Header />
 
       <div className="flex flex-row">
-        <Sidebar
-          style={{
-            width: "20%",
-          }}
-        />
-
+        <Sidebar />
         <ScrollableHome
           style={{ flexGrow: 1, overflowY: "auto", padding: "2rem" }}
         />
