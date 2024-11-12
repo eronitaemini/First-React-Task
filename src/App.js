@@ -20,6 +20,7 @@ const router = createBrowserRouter([
         path: "loginSignup",
         element: <NavigatedPage title="Login/Signup" />,
       },
+      {},
     ],
   },
 ]);

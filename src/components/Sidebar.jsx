@@ -10,7 +10,6 @@ export default function Sidebar({ style }) {
   return (
     <>
       <aside
-        style={style}
         className={`bg-slate-100 py-10 ${
           menuClicked ? "block" : "hidden"
         } lg:block h-screen w-1/6`}

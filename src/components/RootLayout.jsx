@@ -6,8 +6,8 @@ export default function RootLayout() {
     <>
       <Header />
       <div className="flex flex-row">
-        <Sidebar></Sidebar>
-        <Outlet></Outlet>
+        <Sidebar />
+        <Outlet />
       </div>
     </>
   );
