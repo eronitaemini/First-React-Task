@@ -9,6 +9,7 @@ export default function ScrollableHome({ style }) {
         scrollBehavior: "smooth",
         height: "100vh",
       }}
+      className="grid lg:grid-cols-3 md:grid-cols-2"
     >
       {TRANSACTIONS.map((transaction) => (
         <TransactionCard
