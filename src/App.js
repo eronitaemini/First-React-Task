@@ -6,10 +6,6 @@ import RootLayout from "./components/RootLayout";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/",
     element: <RootLayout />,
     children: [
       {
@@ -20,7 +16,10 @@ const router = createBrowserRouter([
         path: "loginSignup",
         element: <NavigatedPage title="Login/Signup" />,
       },
-      {},
+      {
+        path: "/",
+        element: <Home />,
+      },
     ],
   },
 ]);
