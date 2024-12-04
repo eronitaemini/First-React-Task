@@ -15,11 +15,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
+/* 
 .btn {
-  @apply mr-2 bg-red-300 px-5 rounded-md shadow-lg w-20;
-}
-
+  @apply mr-2 bg-red-300 px-5 rounded-md shadow-lg w-40 h-8;
+} */
+/* 
 .link {
   @apply text-sm lg:text-2xl font-bold mb-2;
 }
@@ -40,7 +40,7 @@ code {
   @apply mb-4 font-extrabold text-black lg:text-4xl px-5;
 }
 .trscCardTitle {
-  @apply text-3xl font-bold;
+  @apply text-2xl font-bold;
 }
 .trscCardCategory {
   @apply text-lg text-gray-500  font-bold;
@@ -52,4 +52,4 @@ code {
 
 .btnContainer {
   @apply flex flex-row justify-start mt-5;
-}
+} */

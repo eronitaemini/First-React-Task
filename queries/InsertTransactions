@@ -1,0 +1,25 @@
+INSERT INTO "Expense" (title, value, "createdAt", "categoryId")
+VALUES
+('Grocery Shopping', 45.20, '2024-11-01', 7),  -- Food & Dining
+('Uber Ride', 15.75, '2024-11-03', 14),        -- Transportation
+('Motorcycle Maintenance', 150.00, '2024-10-20', 6), -- Vehicle Expenses
+('Bookstore Purchase', 32.99, '2024-11-02', 12), -- Education
+('Pet Supplies', 45.00, '2024-10-29', 13),     -- Shopping
+('Internet Bill', 65.00, '2024-10-25', 15),    -- Utilities
+('Dinner at Restaurant', 85.50, '2024-10-28', 7), -- Food & Dining
+('Gym Membership', 50.00, '2024-10-15', 8),    -- Health & Fitness
+('Electricity Bill', 120.00, '2024-10-18', 15), -- Utilities
+('Movie Tickets', 30.00, '2024-10-30', 9),     -- Entertainment
+('Gas Station', 40.00, '2024-11-04', 14),      -- Transportation
+('Online Course', 120.00, '2024-11-05', 12),   -- Education
+('Pharmacy Purchase', 15.30, '2024-11-06', 8), -- Health & Fitness
+('New Shoes', 75.00, '2024-10-22', 13),        -- Shopping
+('Streaming Service', 12.99, '2024-11-07', 9), -- Entertainment
+('Water Bill', 30.00, '2024-10-17', 15),       -- Utilities
+('Car Insurance', 300.00, '2024-10-13', 6),    -- Vehicle Expenses
+('Birthday Gift', 50.00, '2024-10-05', 10),    -- Gifts
+('Coffee Shop', 5.50, '2024-11-02', 7),        -- Food & Dining
+('Electric Scooter Rental', 10.00, '2024-10-24', 14), -- Transportation
+('Yoga Class', 20.00, '2024-11-09', 8),        -- Health & Fitness
+('Home Improvement', 55.00, '2024-10-12', 11), -- Housing
+('Concert Tickets', 80.00, '2024-11-08', 9);   -- Entertainment
