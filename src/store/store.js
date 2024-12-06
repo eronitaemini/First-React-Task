@@ -5,6 +5,9 @@ const persistedLoginState = localStorage.getItem("isUserLoggedIn") === "true";
 export const store = configureStore({
   reducer: { auth: authReducer },
   preloadedState: {
-    auth: { isLoggedIn: persistedLoginState },
+    auth: {
+      isLoggedIn: persistedLoginState,
+      errorMessage: "",
+    },
   },
 });

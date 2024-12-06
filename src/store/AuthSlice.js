@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialState = { isLoggedIn: false };
+const initialState = {
+  isLoggedIn: false,
+  errorMessage: "Intiial state of error",
+};
 const authSlice = createSlice({
   name: "Auth",
   initialState: initialState,
@@ -7,12 +10,19 @@ const authSlice = createSlice({
     setIsLoggedIn(state) {
       state.isLoggedIn = true;
       localStorage.setItem("isUserLoggedIn", (state.isLoggedIn = true));
-      console.log("Message from the reducer, user is logged IN succesfully");
     },
     setIsLoggedOut(state) {
       state.isLoggedIn = false;
       localStorage.setItem("isUserLoggedIn", (state.isLoggedIn = false));
-      console.log("Message from the reducer, user is logged OUT succesfully");
+    },
+    setErrorMessage(state, action) {
+      state.errorMessage = action.payload;
+    },
+    clearErrorMessage(state) {
+      state.errorMessage = "";
+    },
+    setDefualtErrorMessage(state) {
+      state.errorMessage = "default error message";
     },
   },
 });

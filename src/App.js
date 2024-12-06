@@ -41,7 +41,9 @@ const router = createBrowserRouter([
       },
       {
         path: "comingSoon",
-        element: <NavigatedPage title="You succesfully signed up" />,
+        element: (
+          <NavigatedPage title="You have succesfully signed up! Continue with log in." />
+        ),
       },
     ],
   },

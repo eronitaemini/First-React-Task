@@ -1,7 +1,6 @@
-import { CATEGORIES } from "../data";
-
-const convertCategoryTonumber = () => {};
-
+import { store } from "../store/store";
+import { authActions } from "../store/AuthSlice";
+import { json } from "react-router-dom";
 export async function getAllTransactions() {
   try {
     const response = await fetch("http://localhost:8080/api/expenses");
@@ -11,13 +10,25 @@ export async function getAllTransactions() {
     }
 
     const res = await response.json();
-    console.log("Fetching trasnactions", res);
     return res;
   } catch (error) {
     console.error("error", error);
   }
 }
+export async function getAllCategories() {
+  try {
+    const response = await fetch("http://localhost:8080/api/categories");
 
+    if (!response.ok) {
+      throw new Error("Rejected");
+    }
+
+    const res = await response.json();
+    return res;
+  } catch (error) {
+    console.error("error", error);
+  }
+}
 export async function deleteTransaction(id) {
   try {
     const response = await fetch(`http://localhost:8080/api/expenses/${id}`, {
@@ -28,14 +39,26 @@ export async function deleteTransaction(id) {
       credentials: "include",
     });
 
-    const res = await response.json();
-    console.log("res", res);
-
-    if (!response.ok) {
-      throw new Error("An error occurred deleting the transaction");
+    if (response.status === 404) {
+      // store.dispatch(authActions.setErrorMessage("Transaction not found"));
+      throw new Error("Transaction not found");
+    }
+    if (response.status === 500) {
+      // store.dispatch(
+      //   authActions.setErrorMessage(
+      //     "An error occurred deleting the transaction! Please try again later"
+      //   )
+      // );
+      throw new Error("An error occurred");
     }
     if (response.status === 204) {
       console.log("succesfully deleted the transaction");
+      store.dispatch(
+        authActions.setErrorMessage("Succesfully deleted the transaction")
+      );
+    }
+    if (!response.ok) {
+      throw new Error("An error occurred deleting the transaction");
     }
   } catch (error) {
     console.error("error", error);
@@ -44,16 +67,12 @@ export async function deleteTransaction(id) {
 
 export async function addTransaction({ request }) {
   const formData = await request.formData();
-  const categoryId = CATEGORIES.find(
-    (category) => category.name === formData.get("category")
-  );
 
   const requestBody = {
     title: formData.get("title"),
     value: formData.get("value"),
-    categoryId: categoryId.id,
+    categoryId: formData.get("category"),
   };
-
   try {
     const response = await fetch("http://localhost:8080/api/expenses", {
       method: "POST",
@@ -64,26 +83,35 @@ export async function addTransaction({ request }) {
       credentials: "include",
     });
 
-    if (!response.ok) {
-      throw new Error("Error occurred while adding the transaction");
+    // if (response.status === 201) {
+    //   store.dispatch(
+    //     authActions.setErrorMessage("Transaction added succesfully")
+    //   );
+    // }
+    if (response.status === 404) {
+      // store.dispatch(
+      //   authActions.setErrorMessage("An error occured! Not found")
+      // );
+      throw new Error("Error! Not found");
     }
-    console.log("succesfully added transaction in the Database through API");
+    if (!response.ok) {
+      // store.dispatch(
+      //   authActions.setErrorMessage("Error occurred creating the transaction")
+      // );
+      throw new Error("Error occurred creating the transaction");
+    }
     const res = await response.json();
     return res;
   } catch (error) {
-    console.error("error", error);
+    return json({ message: error });
   }
 }
 
 export async function editTransaction(id, data) {
-  const categoryId = CATEGORIES.find(
-    (category) => category.name === data.category
-  );
-  console.log(data.category);
   const body = {
     title: data.title,
     value: data.value,
-    category: categoryId,
+    categoryId: data.category,
   };
   try {
     const response = await fetch(`http://localhost:8080/api/expenses/${id}`, {
@@ -96,10 +124,14 @@ export async function editTransaction(id, data) {
     });
 
     if (response.status === 404) {
-      throw new Error(`ERRORRR!, Not found`);
+      // store.dispatch(authActions.setErrorMessage("Error!Not found"));
+      throw new Error(`Error!, Not found`);
     }
     if (!response.ok) {
-      throw new Error("Error editing the transacting");
+      // store.dispatch(
+      //   authActions.setErrorMessage("Error editing the transaction")
+      // );
+      throw new Error("Error editing the transaction");
     }
 
     const res = await response.json();

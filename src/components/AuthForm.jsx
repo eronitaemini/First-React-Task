@@ -1,16 +1,15 @@
 import { Form, Link, redirect, useActionData } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import Button from "./Button";
-import useIsLoggedIn from "../hooks/useLoginStatus";
 import styles from "../cssModules/Form.module.css";
+import { useSelector } from "react-redux";
+import style from "../cssModules/Text.module.css";
 export default function AuthForm() {
   const [searchParams] = useSearchParams();
   const isSignup = searchParams.get("mode") === "signup";
   let mode = isSignup || "login";
-  console.log("isSignup", isSignup);
-  console.log(searchParams.get("mode"));
-  console.log("mode", mode);
-
+  const errorMessage = useSelector((state) => state.auth.errorMessage);
+  console.log("error message in authForm", errorMessage);
   return (
     <>
       <Form
@@ -33,7 +32,7 @@ export default function AuthForm() {
             </label>
             <input
               type="password"
-              name="confimPassword"
+              name="confirmPassword"
               className={styles.input}
             />
           </>
@@ -42,6 +41,7 @@ export default function AuthForm() {
         <Link to={`?mode=${isSignup ? "login" : "signup"}`}>
           {isSignup ? "Already have an account? Log in" : "Create an account"}
         </Link>
+        <p className={style.errorMsg}>{errorMessage}</p>
       </Form>
     </>
   );

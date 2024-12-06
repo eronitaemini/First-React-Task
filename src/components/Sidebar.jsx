@@ -1,22 +1,21 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import menuImg from "../assets/menus.png";
-import { useDispatch } from "react-redux";
-import { authActions } from "../store/AuthSlice";
+import { useSelector } from "react-redux";
 import useLoginStatus from "../hooks/useLoginStatus";
 import style from "../cssModules/Text.module.css";
 import btnStyle from "../cssModules/Button.module.css";
+import { logoutRequest } from "../authentication/authRequests";
 export default function Sidebar() {
   const [menuClicked, toggleMenu] = useState(false);
-
-  const dispatch = useDispatch();
+  const errMsg = useSelector((state) => state.auth.errorMessage);
+  const isUserLoggedIn = useLoginStatus();
   function handleToggleMenu() {
     toggleMenu((prev) => !prev);
   }
   function handleSignOut() {
-    dispatch(authActions.setIsLoggedOut());
+    logoutRequest();
   }
-  const isUserLoggedIn = useLoginStatus();
 
   return (
     <>
@@ -41,9 +40,12 @@ export default function Sidebar() {
               </Link>
             )}
             {isUserLoggedIn && (
-              <button onClick={handleSignOut} className={btnStyle.btn}>
-                Sign Out
-              </button>
+              <>
+                <button onClick={handleSignOut} className={btnStyle.btn}>
+                  Sign Out
+                </button>
+                <p className={style.errorMsg}>{errMsg}</p>
+              </>
             )}
           </ul>
         </div>

@@ -3,13 +3,8 @@ import { json } from "react-router-dom";
 import { store } from "../store/store";
 import { authActions } from "../store/AuthSlice";
 export async function action({ request }) {
-  const url = new URL(request.url);
-
-  console.log("url", url);
   const searchParams = new URL(request.url).searchParams;
-  console.log("searchparams", searchParams);
   const mode = searchParams.get("mode");
-  console.log("mode from the action", mode);
   const formData = await request.formData();
   const loginData = {
     email: formData.get("email"),
@@ -21,12 +16,22 @@ export async function action({ request }) {
     confirmPassword: formData.get("confirmPassword"),
   };
 
-  if (mode === "login") {
-    console.log("sending data to the backend...");
-    return loginRequest(loginData);
-  }
-  if (mode === "signup") {
-    return signupRequest(signupData);
+  try {
+    if (mode === "login") {
+      return loginRequest(loginData);
+    }
+    if (mode === "signup") {
+      if (signupData.password !== signupData.confirmPassword) {
+        store.dispatch(
+          authActions.setErrorMessage("Password fields do not match!")
+        );
+        return { errorMessage: "Password fields do not match!" };
+      }
+      store.dispatch(authActions.setErrorMessage(""));
+      return signupRequest(signupData);
+    }
+  } catch (err) {
+    return { errorMessage: "An unexpected error occurred." };
   }
 }
 
@@ -40,18 +45,34 @@ async function loginRequest(authData) {
       body: JSON.stringify(authData),
       credentials: "include",
     });
-    if (!response.ok) {
-      throw Error({ message: "Rejected" });
+
+    if (response.status === 400) {
+      store.dispatch(
+        authActions.setErrorMessage("E-mail and password are rquired")
+      );
+      throw Error({ message: "E-mail and password are required" });
     }
+
     if (response.status === 404) {
-      return json({ error: "User not found" }, { status: 400 });
-      // throw Error("Not found");
+      store.dispatch(authActions.setErrorMessage("User not found"));
+      throw Error({ message: " Not found" });
+    }
+
+    if (response.status === 401) {
+      store.dispatch(authActions.setErrorMessage("Invalid e-mail or password"));
+      throw Error("Invalid credentials");
     }
 
     if (response.status === 200) {
       store.dispatch(authActions.setIsLoggedIn());
-      console.log("User is succesfully logged in");
+      store.dispatch(authActions.setErrorMessage(""));
       return redirect("/auth/newTransaction");
+    }
+    if (!response.ok) {
+      store.dispatch(
+        authActions.setErrorMessage("There was an error getting your data")
+      );
+      throw Error({ message: "Rejected" });
     }
   } catch (error) {
     return json({ message: "error", error });
@@ -68,7 +89,8 @@ async function signupRequest(authData) {
       },
     });
     if (response.status === 409) {
-      console.error("This user already exists");
+      store.dispatch(authActions.setErrorMessage("User already exists"));
+      throw Error({ message: "User already exists" });
     }
 
     if (!response.ok) {
@@ -76,8 +98,35 @@ async function signupRequest(authData) {
     }
 
     const res = await response.json();
-    console.log("response", res);
     return redirect("/comingSoon");
+  } catch (error) {
+    return json({ message: error });
+  }
+}
+
+export async function logoutRequest() {
+  try {
+    const response = await fetch("http://localhost:8080/api/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.status === 200) {
+      console.log("logout succesful");
+      store.dispatch(authActions.setIsLoggedOut());
+      store.dispatch(authActions.setErrorMessage(""));
+    }
+
+    if (!response.ok) {
+      store.dispatch(
+        authActions.setErrorMessage("There was a problem logging out")
+      );
+      throw Error({ message: "Rejected" });
+    }
+
+    const res = await response.json();
   } catch (error) {
     return json({ message: error });
   }

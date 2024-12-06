@@ -16,3 +16,24 @@
   font-weight: bolder;
   margin-bottom: 0.5rem;
 }
+
+.errorMsg {
+  color: red;
+}
+
+.transactionsWillAppearText {
+  /* text-align: center; */
+  margin: 2rem 0;
+  font-size: 1.5rem;
+  /* color: #888; */
+  font-weight: bold;
+  animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

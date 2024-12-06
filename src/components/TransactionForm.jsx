@@ -1,25 +1,20 @@
 import { Form } from "react-router-dom";
 import Button from "./Button";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
 import style from "../cssModules/Form.module.css";
+import { useEffect } from "react";
+import { getAllCategories } from "../services/transaction";
 export default function TransactionForm() {
-  const categories = [
-    "Technology",
-    "Science",
-    "Health",
-    "Sports",
-    "Vehicle Expenses",
-    "Food & Dining",
-    "Health & Fitness",
-    "Entertainment",
-    "Gifts",
-    "Housing",
-    "Education",
-    "Shopping",
-    "Transportation",
-    "Utilities",
-  ];
+  const [category, setCategories] = useState([]);
+
+  useEffect(() => {
+    async function getCategories() {
+      const categories = await getAllCategories();
+      setCategories(categories);
+    }
+
+    getCategories();
+  }, []);
 
   return (
     <>
@@ -36,14 +31,14 @@ export default function TransactionForm() {
           Category
         </label>
         <select name="category" className={style.select}>
-          {categories.map((category) => (
+          {(category ?? [])?.map((category) => (
             <option
-              key={category}
-              value={category}
+              key={category.id}
+              value={category.id}
               className={style.option}
               name="category"
             >
-              {category}
+              {category.name}
             </option>
           ))}
         </select>

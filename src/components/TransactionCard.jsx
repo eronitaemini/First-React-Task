@@ -1,11 +1,10 @@
 import Button from "./Button";
 import useIsLoggedIn from "../hooks/useLoginStatus";
-import { deleteTransaction, editTransaction } from "../services/transaction";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { EditionForm } from "./EditionForm";
 import style from "../cssModules/TransactionCard.module.css";
+import { ConfirmDeletionModal } from "./ConfirmDeletionModal";
+
 export default function TransactionCard({
   title,
   category,
@@ -16,12 +15,12 @@ export default function TransactionCard({
   onUpdate,
 }) {
   const [isEditing, setIsEditing] = useState(false);
-  const formattedDate = new Date(createdAt).toISOString().split("T")[0];
+  const formattedCreationDate = new Date(createdAt).toISOString().split("T")[0];
   const isUserLoggedIn = useIsLoggedIn();
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  function handleTransactionDeletion(transactionId) {
-    onDelete(transactionId);
-    deleteTransaction(transactionId);
+  function handleTransactionDeletion() {
+    setIsDeleting(true);
   }
 
   const handleTransactionEdit = () => {
@@ -36,6 +35,9 @@ export default function TransactionCard({
     onUpdate(id, updatedData);
     setIsEditing(false);
   };
+  function doneDeleting() {
+    setIsDeleting(false);
+  }
   return (
     <>
       {isEditing && (
@@ -44,19 +46,38 @@ export default function TransactionCard({
             handleCancelEditing={cancelEditing}
             transactionId={id}
             onApplyEditing={handleApplyEditing}
+            transactionTitle={title}
+            category={category.name}
+            transactionValue={value}
           />
         </div>
+      )}
+
+      {isDeleting && (
+        <ConfirmDeletionModal
+          onDeleteTransaction={onDelete}
+          transactionId={id}
+          isDoneDeleting={doneDeleting}
+        />
       )}
       <>
         <div className={style.trscCardContainer}>
           <h2 className={style.trscCardTitle}>{title}</h2>
           <h5 className={style.trscCardCategory}>{category.name}</h5>
           <p className={style.trscCardCategory}>${value}</p>
-          <p className={style.trscCardCategory}>{formattedDate}</p>
+          <p className={style.trscCardCategory}>{formattedCreationDate}</p>
 
           {isUserLoggedIn && (
-            <div className="btnContainer">
-              <Button handleOnClick={() => handleTransactionEdit(id)}>
+            <div className={style.buttonsContainer}>
+              <Button
+                handleOnClick={() => handleTransactionEdit(id)}
+                style={{
+                  backgroundColor: "white",
+                  borderWidth: ".5px",
+                  borderStyle: "solid",
+                  borderColor: "black",
+                }}
+              >
                 Edit
               </Button>
               <Button handleOnClick={() => handleTransactionDeletion(id)}>
