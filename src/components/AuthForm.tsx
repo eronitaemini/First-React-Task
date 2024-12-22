@@ -1,15 +1,17 @@
-import { Form, Link, redirect, useActionData } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import Button from "./Button";
 import styles from "../cssModules/Form.module.css";
 import { useSelector } from "react-redux";
 import style from "../cssModules/Text.module.css";
+import React from "react";
 export default function AuthForm() {
   const [searchParams] = useSearchParams();
   const isSignup = searchParams.get("mode") === "signup";
   let mode = isSignup || "login";
-  const errorMessage = useSelector((state) => state.auth.errorMessage);
-  console.log("error message in authForm", errorMessage);
+  const errorMessage = useSelector(
+    (state: { auth: { errorMessage: string } }) => state.auth.errorMessage
+  );
   return (
     <>
       <Form

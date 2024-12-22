@@ -6,14 +6,14 @@ import useLoginStatus from "../hooks/useLoginStatus";
 import style from "../cssModules/Text.module.css";
 import btnStyle from "../cssModules/Button.module.css";
 import { logoutRequest } from "../authentication/authRequests";
+import React from "react";
 export default function Sidebar() {
-  const [menuClicked, toggleMenu] = useState(false);
-  const errMsg = useSelector((state) => state.auth.errorMessage);
-  const isUserLoggedIn = useLoginStatus();
-  function handleToggleMenu() {
+  const [menuClicked, toggleMenu] = useState<boolean>(false);
+  const isUserLoggedIn: boolean = useLoginStatus();
+  function handleToggleMenu(): void {
     toggleMenu((prev) => !prev);
   }
-  function handleSignOut() {
+  function handleSignOut(): void {
     logoutRequest();
   }
 
@@ -36,7 +36,7 @@ export default function Sidebar() {
             )}
             {!isUserLoggedIn && (
               <Link to="/" className={style.link}>
-                Login/Signup
+                LoginSignup
               </Link>
             )}
             {isUserLoggedIn && (
@@ -44,7 +44,7 @@ export default function Sidebar() {
                 <button onClick={handleSignOut} className={btnStyle.btn}>
                   Sign Out
                 </button>
-                <p className={style.errorMsg}>{errMsg}</p>
+                {/* <p className={style.errorMsg}>{errMsg}</p> */}
               </>
             )}
           </ul>

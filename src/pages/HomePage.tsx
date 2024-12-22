@@ -1,3 +1,4 @@
+import React from "react";
 import ScrollableHome from "../components/ScrollableHome";
 export default function Home() {
   return (

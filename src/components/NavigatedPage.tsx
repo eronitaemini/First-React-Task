@@ -1,5 +1,7 @@
+import React from "react";
 import style from "../cssModules/Text.module.css";
-export default function NavigatedPage({ title }) {
+type TitleProp = string;
+export default function NavigatedPage({ title }: { title: TitleProp }) {
   return (
     <>
       <div style={{ padding: "5%" }}>

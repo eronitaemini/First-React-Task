@@ -1,0 +1,31 @@
+.errorPageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #f8f9fa;
+  color: #ff6b6b;
+  font-family: Arial, sans-serif;
+}
+
+.errorTitle {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.errorMessage {
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.errorLink {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #007bff;
+  text-decoration: none;
+  border-radius: 5px;
+}

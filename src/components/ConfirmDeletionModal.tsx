@@ -1,15 +1,19 @@
+import React from "react";
 import style from "../cssModules/ConfirmDeletionModal.module.css";
 import { deleteTransaction } from "../services/transaction";
+import { IDeletionModalProps } from "../typeInterfaces/types";
+
 export function ConfirmDeletionModal({
   onDeleteTransaction,
   transactionId,
   isDoneDeleting,
-}) {
+}: IDeletionModalProps) {
   function deletingTransaction(id) {
     onDeleteTransaction(id);
     deleteTransaction(id);
     isDoneDeleting();
   }
+
   return (
     <>
       <div className={style.modalContainer}>

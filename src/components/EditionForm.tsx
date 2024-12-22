@@ -4,6 +4,8 @@ import btnStyle from "../cssModules/Button.module.css";
 import { editTransaction } from "../services/transaction";
 import { useState, useEffect } from "react";
 import { getAllCategories } from "../services/transaction";
+import { Categories, EditionFormProps } from "../typeInterfaces/types";
+import React from "react";
 export function EditionForm({
   handleCancelEditing,
   transactionId,
@@ -11,7 +13,7 @@ export function EditionForm({
   transactionTitle,
   category,
   transactionValue,
-}) {
+}: EditionFormProps) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -21,11 +23,11 @@ export function EditionForm({
     onApplyEditing(formObject);
   };
 
-  const [cat, setCategories] = useState([]);
+  const [cat, setCategories] = useState<Categories[]>([]);
 
   useEffect(() => {
     async function getCategories() {
-      const categories = await getAllCategories();
+      const categories: Categories[] = await getAllCategories();
       setCategories(categories);
     }
 

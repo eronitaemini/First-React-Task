@@ -73,6 +73,10 @@ export async function addTransaction({ request }) {
     value: formData.get("value"),
     categoryId: formData.get("category"),
   };
+
+  console.log("request body", requestBody);
+
+  console.log("checking data types:", typeof requestBody.categoryId);
   try {
     const response = await fetch("http://localhost:8080/api/expenses", {
       method: "POST",
@@ -113,6 +117,14 @@ export async function editTransaction(id, data) {
     value: data.value,
     categoryId: data.category,
   };
+
+  console.log(
+    "editing request body",
+    body,
+    "typeof categoryid",
+    typeof body.categoryId
+  );
+
   try {
     const response = await fetch(`http://localhost:8080/api/expenses/${id}`, {
       method: "PUT",

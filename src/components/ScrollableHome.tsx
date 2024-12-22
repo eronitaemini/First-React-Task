@@ -1,21 +1,29 @@
-import TransactionCard from "./TransactionCard";
 import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
+
 import style from "../cssModules/Text.module.css";
+import {
+  IEditionFormProps,
+  ITransactionCard,
+  ITransactionObject,
+} from "../typeInterfaces/types";
+import TransactionCard from "./TransactionCard";
+import React from "react";
 export default function ScrollableHome() {
-  const data = useLoaderData();
-  const [transactions, setTransactions] = useState(data);
-  function handleDeletedTransaction(transactionId) {
+  const data = useLoaderData() as ITransactionCard[];
+  console.log("data", data);
+  const [transactions, setTransactions] = useState<ITransactionCard[]>(data);
+  function handleDeletedTransaction(transactionId: number) {
     setTransactions((prev) =>
       prev.filter((transaction) => transaction.id !== transactionId)
     );
   }
-  const updateTransaction = (id, updatedData) => {
-    const categoryId = parseInt(updatedData.category, 10);
-    const object = transactions.find(
+  const updateTransaction = (id: number, updatedData: IEditionFormProps) => {
+    const categoryId: number = parseInt(updatedData.category, 10);
+    const object: ITransactionObject | undefined = transactions.find(
       (fetchedData) => fetchedData.category.id === categoryId
     );
-
+    console.log("object", object);
     if (!object) {
       console.error("No category found");
       return;
@@ -53,7 +61,7 @@ export default function ScrollableHome() {
             Transaction list is empty.
           </h1>
         )}
-
+        <h1>Home</h1>
         {(transactions ?? [])?.map((transaction) => (
           <TransactionCard
             {...transaction}

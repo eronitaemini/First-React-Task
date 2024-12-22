@@ -4,7 +4,11 @@ import { useState } from "react";
 import { EditionForm } from "./EditionForm";
 import style from "../cssModules/TransactionCard.module.css";
 import { ConfirmDeletionModal } from "./ConfirmDeletionModal";
-
+import {
+  IEditionFormProps,
+  ITransactionCardProps,
+} from "../typeInterfaces/types";
+import React from "react";
 export default function TransactionCard({
   title,
   category,
@@ -13,29 +17,31 @@ export default function TransactionCard({
   id,
   onDelete,
   onUpdate,
-}) {
-  const [isEditing, setIsEditing] = useState(false);
-  const formattedCreationDate = new Date(createdAt).toISOString().split("T")[0];
-  const isUserLoggedIn = useIsLoggedIn();
-  const [isDeleting, setIsDeleting] = useState(false);
+}: ITransactionCardProps) {
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const formattedCreationDate: string = new Date(createdAt)
+    .toISOString()
+    .split("T")[0];
+  const isUserLoggedIn: boolean = useIsLoggedIn();
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
-  function handleTransactionDeletion() {
+  function handleTransactionDeletion(): void {
     setIsDeleting(true);
   }
 
-  const handleTransactionEdit = () => {
+  const handleTransactionEdit = (): void => {
     setIsEditing(true);
   };
 
-  const cancelEditing = () => {
+  const cancelEditing = (): void => {
     setIsEditing(false);
   };
 
-  const handleApplyEditing = (updatedData) => {
+  const handleApplyEditing = (updatedData: IEditionFormProps) => {
     onUpdate(id, updatedData);
     setIsEditing(false);
   };
-  function doneDeleting() {
+  function doneDeleting(): void {
     setIsDeleting(false);
   }
   return (

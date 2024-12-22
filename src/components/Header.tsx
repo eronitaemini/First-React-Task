@@ -1,3 +1,4 @@
+import React from "react";
 import style from "../cssModules/Text.module.css";
 export default function Header() {
   return (
