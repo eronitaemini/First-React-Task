@@ -1,13 +1,20 @@
 import React from "react";
 import style from "../cssModules/ConfirmDeletionModal.module.css";
 import { deleteTransaction } from "../services/transaction";
-import { IDeletionModalProps } from "../typeInterfaces/types";
-
+//interfaces are used more for api calls
+//types are used for props
+//we can also declare these in the same file for readability
+//and better accessibility
+type DeletionModalProps = {
+  onDeleteTransaction: (id: number) => void;
+  transactionId: number;
+  isDoneDeleting: () => void;
+};
 export function ConfirmDeletionModal({
   onDeleteTransaction,
   transactionId,
   isDoneDeleting,
-}: IDeletionModalProps) {
+}: DeletionModalProps) {
   function deletingTransaction(id) {
     onDeleteTransaction(id);
     deleteTransaction(id);

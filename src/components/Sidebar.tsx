@@ -13,6 +13,7 @@ export default function Sidebar() {
   function handleToggleMenu(): void {
     toggleMenu((prev) => !prev);
   }
+  //we can delete the void
   function handleSignOut(): void {
     logoutRequest();
   }

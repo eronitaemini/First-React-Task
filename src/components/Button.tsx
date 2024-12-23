@@ -1,12 +1,15 @@
 import React from "react";
 import styles from "../cssModules/Button.module.css";
-import { IButtonProps } from "../typeInterfaces/types";
-
+type ButtonProps = {
+  handleOnClick: () => void;
+  style: React.CSSProperties;
+  children: React.ReactNode;
+};
 export default function Button({
   children,
   handleOnClick,
   style,
-}: IButtonProps) {
+}: ButtonProps) {
   return (
     <button className={styles.btn} style={style} onClick={handleOnClick}>
       {children}

@@ -4,10 +4,7 @@ import { useState } from "react";
 import { EditionForm } from "./EditionForm";
 import style from "../cssModules/TransactionCard.module.css";
 import { ConfirmDeletionModal } from "./ConfirmDeletionModal";
-import {
-  IEditionFormProps,
-  ITransactionCardProps,
-} from "../typeInterfaces/types";
+import { EditionFormProps, TransactionCardProp } from "../typeInterfaces/types";
 import React from "react";
 export default function TransactionCard({
   title,
@@ -17,7 +14,7 @@ export default function TransactionCard({
   id,
   onDelete,
   onUpdate,
-}: ITransactionCardProps) {
+}: TransactionCardProp) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const formattedCreationDate: string = new Date(createdAt)
     .toISOString()
@@ -37,7 +34,7 @@ export default function TransactionCard({
     setIsEditing(false);
   };
 
-  const handleApplyEditing = (updatedData: IEditionFormProps) => {
+  const handleApplyEditing = (updatedData: EditionFormProps) => {
     onUpdate(id, updatedData);
     setIsEditing(false);
   };

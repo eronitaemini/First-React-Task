@@ -5,6 +5,7 @@ import styles from "../cssModules/Form.module.css";
 import { useSelector } from "react-redux";
 import style from "../cssModules/Text.module.css";
 import React from "react";
+
 export default function AuthForm() {
   const [searchParams] = useSearchParams();
   const isSignup = searchParams.get("mode") === "signup";

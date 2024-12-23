@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { getAllCategories } from "../services/transaction";
 import { Categories, EditionFormProps } from "../typeInterfaces/types";
 import React from "react";
+
 export function EditionForm({
   handleCancelEditing,
   transactionId,
@@ -18,9 +19,17 @@ export function EditionForm({
     event.preventDefault();
     const formData = new FormData(event.target);
     const formObject = Object.fromEntries(formData.entries());
+    const matchingCategory = cat.find(
+      (element) => element.id.toString() === formObject.category
+    );
+    const newObject = {
+      title: formObject.title,
+      value: formObject.value,
+      category: matchingCategory,
+    };
     editTransaction(transactionId, formObject);
     handleCancelEditing();
-    onApplyEditing(formObject);
+    onApplyEditing(newObject);
   };
 
   const [cat, setCategories] = useState<Categories[]>([]);

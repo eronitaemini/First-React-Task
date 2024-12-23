@@ -35,7 +35,7 @@ export async function action({ request }) {
   }
 }
 
-async function loginRequest(authData) {
+export async function loginRequest(authData) {
   try {
     const response = await fetch("http://localhost:8080/api/login", {
       method: "POST",

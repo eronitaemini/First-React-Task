@@ -4,14 +4,15 @@ import { useState } from "react";
 import style from "../cssModules/Form.module.css";
 import { useEffect } from "react";
 import { getAllCategories } from "../services/transaction";
-import { ICategories } from "../typeInterfaces/types";
+import { Categories } from "../typeInterfaces/types";
 import React from "react";
+
 export default function TransactionForm() {
-  const [category, setCategories] = useState<ICategories[]>([]);
+  const [category, setCategories] = useState<Categories[]>([]);
 
   useEffect(() => {
     async function getCategories() {
-      const categories: ICategories[] = await getAllCategories();
+      const categories: Categories[] = await getAllCategories();
       setCategories(categories);
     }
 
