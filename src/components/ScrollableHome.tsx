@@ -20,10 +20,13 @@ export default function ScrollableHome() {
   }
 
   const updateTransaction = (id: number, updatedData: EditionFormProps) => {
-    setTransactions((prevTransactions) =>
-      prevTransactions.map((transaction) =>
-        transaction.id === id ? { ...transaction, ...updatedData } : transaction
-      )
+    setTransactions(
+      (prevTransactions) =>
+        prevTransactions.map((transaction) =>
+          transaction.id === id
+            ? { ...transaction, ...updatedData }
+            : transaction
+        ) as TransactionCardProp[]
     );
   };
 

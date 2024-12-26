@@ -45,6 +45,10 @@ export async function loginRequest(authData) {
       body: JSON.stringify(authData),
       credentials: "include",
     });
+    console.log("response", response);
+    const res = await response.json();
+
+    console.log("res", res);
 
     if (response.status === 400) {
       store.dispatch(
@@ -68,6 +72,7 @@ export async function loginRequest(authData) {
       store.dispatch(authActions.setErrorMessage(""));
       return redirect("/auth/newTransaction");
     }
+
     if (!response.ok) {
       store.dispatch(
         authActions.setErrorMessage("There was an error getting your data")
@@ -79,7 +84,7 @@ export async function loginRequest(authData) {
   }
 }
 
-async function signupRequest(authData) {
+export async function signupRequest(authData) {
   try {
     const response = await fetch("http://localhost:8080/api/signup", {
       method: "POST",
