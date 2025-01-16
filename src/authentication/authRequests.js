@@ -36,8 +36,9 @@ export async function action({ request }) {
 }
 
 export async function loginRequest(authData) {
+  // http://localhost:8080/api/login
   try {
-    const response = await fetch("http://localhost:8080/api/login", {
+    const response = await fetch("http://localhost:5130/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,10 +46,11 @@ export async function loginRequest(authData) {
       body: JSON.stringify(authData),
       credentials: "include",
     });
+    console.log("auth data to log in", authData);
     console.log("response", response);
-    const res = await response.json();
+    // const res = await response.json();
 
-    console.log("res", res);
+    // console.log("res after await response.json()", res);
 
     if (response.status === 400) {
       store.dispatch(
@@ -68,6 +70,7 @@ export async function loginRequest(authData) {
     }
 
     if (response.status === 200) {
+      console.log("The user is succesfully logged in");
       store.dispatch(authActions.setIsLoggedIn());
       store.dispatch(authActions.setErrorMessage(""));
       return redirect("/auth/newTransaction");
@@ -85,14 +88,16 @@ export async function loginRequest(authData) {
 }
 
 export async function signupRequest(authData) {
+  // http://localhost:8080/api/signup
   try {
-    const response = await fetch("http://localhost:8080/api/signup", {
+    const response = await fetch("http://localhost:5130/api/user", {
       method: "POST",
       body: JSON.stringify(authData),
       headers: {
         "Content-Type": "application/json",
       },
     });
+    console.log("authdata", authData);
     if (response.status === 409) {
       store.dispatch(authActions.setErrorMessage("User already exists"));
       throw Error({ message: "User already exists" });
@@ -102,7 +107,8 @@ export async function signupRequest(authData) {
       throw Error({ message: "Rejected" });
     }
 
-    const res = await response.json();
+    // const res = await response.json();
+    // console.log("res after singup", res);
     return redirect("/comingSoon");
   } catch (error) {
     return json({ message: error });
@@ -110,12 +116,14 @@ export async function signupRequest(authData) {
 }
 
 export async function logoutRequest() {
+  // http://localhost:8080/api/logout
   try {
-    const response = await fetch("http://localhost:8080/api/logout", {
+    const response = await fetch("http://localhost:5130/api/auth/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
 
     if (response.status === 200) {
@@ -132,6 +140,7 @@ export async function logoutRequest() {
     }
 
     const res = await response.json();
+    return res;
   } catch (error) {
     return json({ message: error });
   }

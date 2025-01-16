@@ -1,44 +1,48 @@
 import { store } from "../store/store";
 import { authActions } from "../store/AuthSlice";
 import { json } from "react-router-dom";
+
 export async function getAllTransactions() {
   try {
-    const response = await fetch("http://localhost:8080/api/expenses");
+    const response = await fetch("http://localhost:5130/api/Expense");
+    const res = await response.json();
+    const results = res.result;
 
     if (!response.ok) {
       throw new Error("Rejected");
     }
 
-    const res = await response.json();
-    return res;
+    return results;
   } catch (error) {
     console.error("error", error);
   }
 }
 export async function getAllCategories() {
+  // http://localhost:8080/api/categories
   try {
-    const response = await fetch("http://localhost:8080/api/categories");
+    const response = await fetch("http://localhost:5130/api/category");
 
     if (!response.ok) {
       throw new Error("Rejected");
     }
 
     const res = await response.json();
-    return res;
+    return res.result;
   } catch (error) {
     console.error("error", error);
   }
 }
 export async function deleteTransaction(id) {
+  // http://localhost:8080/api/expenses/${id}
   try {
-    const response = await fetch(`http://localhost:8080/api/expenses/${id}`, {
+    const response = await fetch(`http://localhost:5130/api/expense/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "include",
     });
-
+    console.log("response status while trying to delete", response.status);
     if (response.status === 404) {
       // store.dispatch(authActions.setErrorMessage("Transaction not found"));
       throw new Error("Transaction not found");
@@ -66,6 +70,7 @@ export async function deleteTransaction(id) {
 }
 
 export async function addTransaction({ request }) {
+  // http://localhost:8080/api/expenses
   const formData = await request.formData();
 
   const requestBody = {
@@ -78,7 +83,7 @@ export async function addTransaction({ request }) {
 
   console.log("checking data types:", typeof requestBody.categoryId);
   try {
-    const response = await fetch("http://localhost:8080/api/expenses", {
+    const response = await fetch("http://localhost:5130/api/expense", {
       method: "POST",
       body: JSON.stringify(requestBody),
       headers: {
@@ -112,7 +117,9 @@ export async function addTransaction({ request }) {
 }
 
 export async function editTransaction(id, data) {
+  // http://localhost:8080/api/expenses/${id}
   const body = {
+    id: id,
     title: data.title,
     value: data.value,
     categoryId: data.category,
@@ -126,7 +133,7 @@ export async function editTransaction(id, data) {
   );
 
   try {
-    const response = await fetch(`http://localhost:8080/api/expenses/${id}`, {
+    const response = await fetch(`http://localhost:5130/api/Expense/${id}`, {
       method: "PUT",
       body: JSON.stringify(body),
       headers: {
