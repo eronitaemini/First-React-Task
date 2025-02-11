@@ -63,7 +63,8 @@ namespace MyApp.Namespace
                 }
 
                 Expense expense = _mapper.Map<Expense>(createExpenseDTO);
-                var category = await _categoryRepo.GetByIdAsync(createExpenseDTO.CategoryId);
+                var categoryIdInInt = Int32.Parse(createExpenseDTO.CategoryId);
+                var category = await _categoryRepo.GetByIdAsync(categoryIdInInt);
                 expense.Category = category;
                 expense.CreatedAt = DateTime.Now;
                 _response.StatusCode = HttpStatusCode.OK;
